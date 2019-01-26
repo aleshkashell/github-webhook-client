@@ -91,7 +91,13 @@ public class GithubWebhookClientApplication {
 					if(!Objects.isNull(publishMessageHint) && !publishMessageHint.isEmpty()) {
 						if(payloadMap.containsKey("head_commit")){
 							String message = (String) ((Map<?,?>)payloadMap.get("head_commit")).get("message");
-							if(!Objects.isNull(message) && !message.isEmpty() && message.contains(publishMessageHint)){
+							if(Objects.isNull(message)){
+								System.out.println("message is null");
+							}
+							if(message.isEmpty()){
+								System.out.println("message is empty");
+							}
+							if(!Objects.isNull(message) && !message.isEmpty()){
 								callShellScript(shellPath);
 							} else {
 								System.out.println("Publish Message hint not found in message, not creating trigger file");
